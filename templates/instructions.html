@@ -1,27 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends "base.html" %}
+{% block body %}
   <title>Recipe Details</title>
-</head>
-<body>
+
   <h1>{{ results.title }}</h1>
   <img src="{% if results.image %}{{ results.image }}{% endif %}">
 
   <h2>Ingredients:</h2>
   <ul>
     {% for ingredient in results.extendedIngredients %}
-      <li>{{ ingredient.original }}
-        {% if ingredient.image %}
-          <img src="{{ ingredient.image }}">
-        {% endif %}
-      </li>
+      <li>{{ ingredient.original }}</li>
     {% endfor %}
   </ul>
 
   <h3>Instructions:</h3>
   <ol>
     {% for instruction in results.analyzedInstructions[0].steps %}
-      <li>{{ instruction.step }}</li>
+      <li><b>{{ instruction.step }}</b></li>
     {% endfor %}
   </ol>
 
@@ -31,5 +25,4 @@
   <h4>Servings:</h4>
   <p>{{ results.servings }}</p>
     
-</body>
-</html>
+{% endblock %}

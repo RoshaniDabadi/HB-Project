@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends "base.html" %}
+{% block body %}
   <title>Recipes for Me</title>
-</head>
-<body>
   {% for result in results['results'] %}
 
   <a href="/instructions/{{ result['id'] }}">
@@ -11,5 +8,4 @@
   <img src="{{ result['image'] }}">
   </a>
   {% endfor %}
-</body>
-</html>
+{% endblock %}

@@ -1,18 +1,58 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, redirect, url_for
+from flask_login import LoginManager, login_user, logout_user, login_required
+from werkzeug.security import generate_password_hash, check_password_hash
+from model import User, db
 import crud
 import requests
 from pprint import pprint
 import os
 
 app = Flask(__name__)
-app.secret_key = 'SECRETSECRETSECRET'
+app.secret_key = 'eat_well_live_well'
+
+#configuring Flask-Login
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 API_KEY = os.environ['SPOONACULAR_KEY']
+
+@login_manager.user_loader
+def load_user(user_id):
+     """Callback to load user object based on user_id"""
+     return User.query.get(int(user_id))
 
 @app.route('/') 
 def index():
     """Homepage"""
     return render_template('index.html') 
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+     """User registration"""
+     if request.method == 'POST':
+          username = request.form['username']
+          password = request.form['password']
+
+          #Checking if username already exists
+          existing_user = User.query.filter.by(username=username).first()
+          if existing_user:
+               # Display error message or redirect to registration page
+            return 'Username already exists'
+          
+          # Create a new user
+          new_user = User(username=username, password=generate_password_hash(password))
+          db.session.add(new_user)
+          db.session.commit()
+
+        # Log in the user after registration
+          login_user(new_user)
+        
+        # Redirect to the user's dashboard or any other page
+          return redirect(url_for('dashboard'))
+
+     return render_template('register.html')
+
+
 
 @app.route("/health", methods=["POST"]) 
 def health_condition():
@@ -98,14 +138,6 @@ def instructions(recipe_id):
         #return recipe_id
 
         return render_template("instructions.html", results=data)
-
-
-
-# https://fellowship.hackbrightacademy.com/materials/serft18/lectures/flask/#variables-in-a-url
-
-# get individual recipe info from
-# https://api.spoonacular.com/recipes/{id}/information
-# docs: https://spoonacular.com/food-api/docs#Get-Recipe-Information
 
 if __name__ == '__main__':
     from model import connect_to_db

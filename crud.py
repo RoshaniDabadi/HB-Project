@@ -1,7 +1,7 @@
 from model import Health_Condition, db 
 
 
-def create_Health_Condition(condition_name, condition_description, minCarbs, 
+def create_Health_Condition(condition_name, condition_description, minCarbs, #creates a new health condition every time, need to assign them to users 
     maxCarbs, minCholesterol, maxCholesterol, minSaturatedFat,
     maxSaturatedFat, minSugar, maxSugar, minIron):
 
@@ -22,6 +22,8 @@ def create_Health_Condition(condition_name, condition_description, minCarbs,
     db.session.commit()
 
     return condition
+
+
 
 
     #queryHealthCondition function -- to be added later

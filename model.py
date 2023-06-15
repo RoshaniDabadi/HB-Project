@@ -20,6 +20,37 @@ class Health_Condition(db.Model):
     min_Iron = db.Column(db.Integer)
 
 
+class User(db.Model):
+    __tablename__ = "users"
+    """"""
+    user_id = db.Column(db.Integer, primary_key = True, autoincrement=True, nullable = False)
+    username = db.Column(db.String(25), unique=True, nullable = False)
+    password = db.Column(db.String(), nullable = False)
+    recipe_id = db.Column(db.Integer) 
+    condition_id = db.Column(db.Integer, db.ForeignKey('health_conditions.condition_id'))
+
+    def __repr__(self):
+        return f'<User user_id={self.user_id} username={self.username}>'
+    
+    #create a recipe class with their titles, image, etc. 
+    # every time a user favorites a recipe, check to make sure it's not already in the database. add it to the db if it's not already there. 
+    #many to many rlnship b/w users and recipes 
+    #a middle table with user_id and recipe_id (example in the data modeling lecture)
+
+
+
+
+class Recipe(db.Model):
+    __tablename__ = "recipes"
+
+    recipe_id = db.Column(db.Integer, primary_key = True, nullable = False) #API generated recipe_id
+    title = db.Column(db.String())
+    image = db.Column(db.String())
+
+    def __repr__(self):
+        return f'<Recipe recipe_id={self.recipe_id} title={self.title}>'
+
+
 
 def connect_to_db(flask_app, db_uri="postgresql:///health", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
