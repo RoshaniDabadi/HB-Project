@@ -3,19 +3,27 @@
   <title>Recipe Details</title>
 
   <h1>{{ results.title }}</h1>
-  <img src="{% if results.image %}{{ results.image }}{% endif %}">
+  <img src="{% if results.image %}{{ results.image }}{% endif %}" class="recipe-image">
 
   <h2>Ingredients:</h2>
   <ul>
     {% for ingredient in results.extendedIngredients %}
       <li>{{ ingredient.original }}</li>
+      {% if not loop.last %}
+        <br>
+      {% endif %}
     {% endfor %}
   </ul>
+  <br>
+  <br>
 
   <h3>Instructions:</h3>
-  <ol>
+  <ol class="instructions-list">
     {% for instruction in results.analyzedInstructions[0].steps %}
       <li><b>{{ instruction.step }}</b></li>
+      {% if not loop.last %}
+        <br>
+      {% endif %}
     {% endfor %}
   </ol>
 

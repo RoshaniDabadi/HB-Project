@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request, session, redirect, url_for
-from flask_login import LoginManager, login_user, logout_user, login_required
+from flask import Flask, render_template, request, session, redirect
+from flask_login import LoginManager, login_required, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from model import User, db
 import crud
@@ -10,11 +10,15 @@ import os
 app = Flask(__name__)
 app.secret_key = 'eat_well_live_well'
 
-#configuring Flask-Login
-login_manager = LoginManager()
-login_manager.init_app(app)
-
 API_KEY = os.environ['SPOONACULAR_KEY']
+
+def custom_login_required(route_function):
+    @wraps(route_function) #paused here, unsure what wraps is ---->> look into this, see if there are alternatives that are simpler
+    def wrapper(*args, **kwargs):
+        if 'user_id' not in session:
+            return redirect('/login')
+        return route_function(*args, **kwargs)
+    return wrapper
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -30,11 +34,12 @@ def index():
 def register():
      """User registration"""
      if request.method == 'POST':
-          username = request.form['username']
-          password = request.form['password']
+          # <form> <input>...</input> </form>
+          username = request.form['username'] # <input name="username">
+          password = request.form['password'] # <input name="password">
 
           #Checking if username already exists
-          existing_user = User.query.filter.by(username=username).first()
+          existing_user = User.query.filter_by(username=username).first()
           if existing_user:
                # Display error message or redirect to registration page
             return 'Username already exists'
@@ -44,13 +49,45 @@ def register():
           db.session.add(new_user)
           db.session.commit()
 
-        # Log in the user after registration
-          login_user(new_user)
+          """add the session feature with the user_id"""
+
+          session['user_id'] = user.id
         
         # Redirect to the user's dashboard or any other page
-          return redirect(url_for('dashboard'))
+          return redirect('/dashboard')
 
      return render_template('register.html')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    """User login"""
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        # Check if username exists
+        user = User.query.filter_by(username=username).first()
+        if not user or not check_password_hash(user.password, password):
+            # Display error message or redirect to login page
+            return 'Invalid username or password'
+
+        # Log in the user
+        #login_user(user)
+        """use session instead"""
+
+        # Redirect to the user's dashboard or any other page
+        return redirect('/dashboard')
+
+    return render_template('login.html')
+
+
+@app.route('/logout')
+def login_required()
+def logout():
+    """User logout"""
+    session.pop('user_id', None)
+    return redirect('/index')
 
 
 
@@ -80,7 +117,7 @@ def health_condition():
             maxSugar = int(line[9])
             minIron = int(line[10])
 
-            new_condition = crud.create_Health_Condition(condition_name, 
+            """new_condition = crud.create_Health_Condition(condition_name, 
                                                      condition_description, 
                                                      minCarbs, 
                                                      maxCarbs, 
@@ -90,7 +127,7 @@ def health_condition():
                                                      maxSaturatedFat, 
                                                      minSugar, 
                                                      maxSugar, 
-                                                     minIron)
+                                                     minIron)"""
             
     headers = {"Content-Type": "application/json"}
 
