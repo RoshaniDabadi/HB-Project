@@ -63,6 +63,21 @@ def retrieve_favorite_recipes(user_id):
     # Return the favorite recipes as a list or any suitable data structure
     return favorite_recipes
 
+def recipe_query(recipe_id):
+
+    recipe = Recipe.query.get(recipe_id)
+    
+    return recipe
+
+def add_to_favorites(user_id, recipe_id):
+    
+    add_favorite = Favorite(user_id=user_id, recipe_id=recipe_id)
+
+    db.session.add(add_favorite)
+    db.session.commit()
+
+
+        
 if __name__ == "__main__":
     from server import app
 

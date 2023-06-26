@@ -116,7 +116,7 @@ def health_condition():
     return render_template("health_conditions.html", results=recipes_data)
 
 
-@app.route('/instructions/<recipe_id>', methods=['GET', 'POST']) #review this route 
+@app.route('/instructions/<recipe_id>', methods=['GET']) #review this route 
 def instructions(recipe_id):
     
         payload = {
@@ -134,11 +134,6 @@ def instructions(recipe_id):
         data = res.json()
         pprint(data)
 
-        if request.method == 'POST':
-            recipe_id = request.form.get('recipe_id')
-            recipe_title = request.form.get('recipe_title')
-            recipe_image = request.form.get('recipe_image')
-
         return render_template("instructions.html", results=data)
 
 
@@ -149,12 +144,31 @@ def dashboard():
 
         # Retrieve the user's favorite recipes
         favorite_recipes = crud.retrieve_favorite_recipes(user_id)
-        
 
+        if request.method == 'POST':
+            recipe_id = request.json.get('recipe_id')
+            recipe_title = request.json.get('recipe_title')
+            recipe_image = request.json.get('recipe_image')
+        
+            print("\n\n",recipe_id, recipe_title, recipe_image, "\n\n")
+
+            recipe = crud.recipe_query(recipe_id)
+
+            if recipe is None:
+                crud.populate_api_recipes(recipe_id, recipe_title, recipe_image)
+
+            
+            favorite_recipe = crud.add_to_favorites(user_id, recipe_id)
+
+            return {"Success": True}
+
+    
+    
         return render_template('dashboard.html', favorite_recipes=favorite_recipes)
     
     else:
         return ("You must be logged in to access the dashboard!")
+    
 
 
 
