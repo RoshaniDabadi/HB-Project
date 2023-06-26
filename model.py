@@ -26,19 +26,14 @@ class User(db.Model):
     user_id = db.Column(db.Integer, primary_key = True, autoincrement=True, nullable = False)
     username = db.Column(db.String(25), unique=True, nullable = False)
     password = db.Column(db.String(), nullable = False)
-    recipe_id = db.Column(db.Integer) 
     condition_id = db.Column(db.Integer, db.ForeignKey('health_conditions.condition_id'))
 
+    favorites = db.relationship("Favorite", back_populates="user")
+    
     def __repr__(self):
         return f'<User user_id={self.user_id} username={self.username}>'
     
     #create a recipe class with their titles, image, etc. 
-    # every time a user favorites a recipe, check to make sure it's not already in the database. add it to the db if it's not already there. 
-    #many to many rlnship b/w users and recipes 
-    #a middle table with user_id and recipe_id (example in the data modeling lecture)
-
-
-
 
 class Recipe(db.Model):
     __tablename__ = "recipes"
@@ -46,11 +41,26 @@ class Recipe(db.Model):
     recipe_id = db.Column(db.Integer, primary_key = True, nullable = False) #API generated recipe_id
     title = db.Column(db.String())
     image = db.Column(db.String())
+    source_url = db.Column(db.String())
+
+    favorites = db.relationship("Favorite", back_populates="recipe")
 
     def __repr__(self):
         return f'<Recipe recipe_id={self.recipe_id} title={self.title}>'
 
+    
+class Favorite(db.Model):
+    __tablename__ = "favorites"
 
+    favorite_id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
+    recipe_id = db.Column(db.Integer, db.ForeignKey("recipes.recipe_id"), nullable=False)
+    user = db.relationship('User', back_populates='favorites')
+    recipe = db.relationship('Recipe', back_populates='favorites')
+
+    def __repr__(self):
+        return f"<Favorite(favorite_id={self.favorite_id})>" #not sure how to get recipe title after the favorite id here using recipe_id
+    
 
 def connect_to_db(flask_app, db_uri="postgresql:///health", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
@@ -61,50 +71,6 @@ def connect_to_db(flask_app, db_uri="postgresql:///health", echo=True):
     db.init_app(flask_app)
 
     print("Connected to the db!")
-
-
-# class Recipe(db.model):
-#     """Data model for recipe."""
-#     __tablename__= "recipes"
-
-#     id = db.Column(db.Integer, primary_key = True)
-#     title = db.Column(db.String(250))
-#     image = db.Column(db.String(250))
-#     calories = db.Column(db.Integer)
-#     protein = db.Column(db.String(10))
-#     fat = db.Column(db.String(10))
-#     carbs = db.Column(db.String(10))
-
-#     def __repr__(self):
-#         return f"<Recipe(id={self.id}, title='{self.title}')>"
-#     # Assuming you have already created the database and connected to it
-# # ...
-
-# # Function to populate the recipes table
-# def populate_recipes(data):
-#     for recipe_data in data:
-#         recipe = Recipe(
-#             id=recipe_data['id'],
-#             title=recipe_data['title'],
-#             image=recipe_data['image'],
-#             calories=recipe_data['calories'],
-#             protein=recipe_data['protein'],
-#             fat=recipe_data['fat'],
-#             carbs=recipe_data['carbs']
-#         )
-#         db.session.add(recipe)
-    
-#     db.session.commit()
-#     print("Recipes table populated successfully!")
-
-# Assuming you have retrieved the data from the API and stored it in a variable called `api_data`
-# ...
-
-# Call the function to populate the recipes table
-# populate_recipes(api_data)
-
-
-
 
 
 

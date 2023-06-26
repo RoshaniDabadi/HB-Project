@@ -1,5 +1,20 @@
 {% extends "base.html" %}
 {% block body %}
+
+  <div id="heartContainer">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <form id="favoriteForm">
+  <input type="hidden" id="recipe_id" value="{{ results.id }}">
+  <input type="hidden" id="recipe_title" value="{{ results.title }}">
+  <input type="hidden" id="recipe_image" value="{{ results.image }}">  
+  <button id="favoriteButton" type="submit">
+  <i class="fas fa-heart heart-icon" style="font-size: 50px;"></i>
+  </button>
+  </form>
+  <br>
+  Click to add to favorites
+  </div>
+
   <title>Recipe Details</title>
 
   <h1>{{ results.title }}</h1>
@@ -8,29 +23,27 @@
   <h2>Ingredients:</h2>
   <ul>
     {% for ingredient in results.extendedIngredients %}
-      <li>{{ ingredient.original }}</li>
-      {% if not loop.last %}
-        <br>
-      {% endif %}
+      <li><b>{{ ingredient.original }}</b></li>
     {% endfor %}
   </ul>
-  <br>
-  <br>
 
-  <h3>Instructions:</h3>
+  <h2>Prep Time:</h2>
+  <p><b>{{ results.readyInMinutes }} minutes</b></p>
+
+  <h3>Servings:</h3>
+  <p><b>{{ results.servings }}</b></p>
+
+  <h4>Instructions:</h4>
   <ol class="instructions-list">
     {% for instruction in results.analyzedInstructions[0].steps %}
       <li><b>{{ instruction.step }}</b></li>
-      {% if not loop.last %}
-        <br>
-      {% endif %}
     {% endfor %}
   </ol>
 
-  <h3>Prep Time:</h3>
-  <p>{{ results.readyInMinutes }} minutes</p>
+  <h4>Summary and Nutrition Details:</h4>
+  <ol class="recipe-summary">
+  <p>{{ results.summary | safe }}</p>
+  </ol>
 
-  <h4>Servings:</h4>
-  <p>{{ results.servings }}</p>
-    
+  <script src="{{ url_for('static', filename='js/favorites.js') }}"></script>
 {% endblock %}

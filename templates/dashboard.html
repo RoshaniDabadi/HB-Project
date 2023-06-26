@@ -6,13 +6,29 @@
 
 {% block body %}
   <h1>Welcome to your Dashboard</h1>
-  
-  <!-- Add your dashboard content here -->
 
   <div class="user-info">
-    <h2>Hello, {{ current_user.username }}!</h2>
-    <p></p>
+    <h2>Hello, {{ session['username'] }}!</h2>
+    <p>Your favorite recipes are here for instant access!</p>
   </div>
-  
-  <!-- Add more dashboard components and features -->
+
+  <br><br><br><br>
+
+  <div class="dashboard-components">
+    <h3>Favorite Recipes</h3>
+    <ul>
+      {% for recipe in favorite_recipes %}
+        <li>
+          Recipe ID: {{ recipe.recipe_id }}<br>
+          Title: {{ recipe.title }}<br>
+          <img src="{{ recipe.image }}" alt="{{ recipe.title }}" width="100"><br>
+        </li>
+      {% endfor %}
+    </ul>
+
+    <h3>Settings</h3>
+    <!-- Add settings options and forms for user preferences -->
+  </div>
+
+  <script src="{{ url_for('static', filename='js/favorites.js') }}"></script>
 {% endblock %}

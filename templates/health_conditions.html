@@ -1,11 +1,16 @@
 {% extends "base.html" %}
-{% block body %}
-  <title>Recipes for Me</title>
-  {% for result in results['results'] %}
 
-  <a href="/instructions/{{ result['id'] }}">
-  <h1>{{ result['title'] }}</h1>
-  <img src="{{ result['image'] }}">
-  </a>
+{% block title %}
+    Recipes for You
+{% endblock %}
+
+{% block body %}
+  <font size=16>Click for recipe instructions:</font>
+  <br><br><br>
+  {% for result in results['results'] %}
+    <a href="/instructions/{{ result['id'] }}">
+    <h1>{{ result['title'] }}</h1>
+    <img src="{{ result['image'] }}">
+    </a>
   {% endfor %}
 {% endblock %}
