@@ -1,19 +1,21 @@
 {% extends "base.html" %}
 {% block body %}
 
-  <div id="heartContainer">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <form id="favoriteForm">
-  <input type="hidden" id="recipe_id" value="{{ results.id }}">
-  <input type="hidden" id="recipe_title" value="{{ results.title }}">
-  <input type="hidden" id="recipe_image" value="{{ results.image }}">  
-  <button id="favoriteButton" type="submit">
-  <i class="fas fa-heart heart-icon" style="font-size: 50px;"></i>
-  </button>
-  </form>
-  <br>
-  Click to add to favorites
-  </div>
+  {% if is_user_logged_in %}
+    <div id="heartContainer">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+      <form id="favoriteForm">
+        <input type="hidden" id="recipe_id" value="{{ results.id }}">
+        <input type="hidden" id="recipe_title" value="{{ results.title }}">
+        <input type="hidden" id="recipe_image" value="{{ results.image }}">  
+        <button id="favoriteButton" type="submit">
+          <i class="fas fa-heart heart-icon" style="font-size: 50px;"></i>
+        </button>
+      </form>
+      <br>
+      Click to add to favorites
+    </div>
+  {% endif %}
 
   <title>Recipe Details</title>
 

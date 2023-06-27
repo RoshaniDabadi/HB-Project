@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, session, redirect, jsonify
 from model import User, Recipe, Favorite, db
 import crud
-from crud import populate_api_recipes
 import requests
 from pprint import pprint
 import os
@@ -134,12 +133,16 @@ def instructions(recipe_id):
         data = res.json()
         pprint(data)
 
-        return render_template("instructions.html", results=data)
+        is_user_logged_in = 'user_id' in session
+
+        return render_template("instructions.html", results=data, is_user_logged_in=is_user_logged_in)
 
 
 @app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
-    if 'user_id' in session:
+    is_user_logged_in = 'user_id' in session
+
+    if is_user_logged_in:
         user_id = session['user_id']
 
         # Retrieve the user's favorite recipes
@@ -164,10 +167,10 @@ def dashboard():
 
     
     
-        return render_template('dashboard.html', favorite_recipes=favorite_recipes)
+        return render_template('dashboard.html', favorite_recipes=favorite_recipes, is_user_logged_in=is_user_logged_in)
     
-    else:
-        return ("You must be logged in to access the dashboard!")
+    
+    return ("You must be logged in to access the dashboard!")
     
 
 
