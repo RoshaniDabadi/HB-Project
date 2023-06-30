@@ -1,49 +1,89 @@
 {% extends "base.html" %}
 
+{% block title %}
+{% endblock %}
 {% block body %}
 
-  <h1>Eat well, live well, and thrive!</h1>
+<div id="healthConditionsCarousel" class="carousel slide" data-bs-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-bs-target="#healthConditionsCarousel" data-bs-slide-to="0" class="active"></li>
+    <li data-bs-target="#healthConditionsCarousel" data-bs-slide-to="1"></li>
+    <li data-bs-target="#healthConditionsCarousel" data-bs-slide-to="2"></li>
+    <li data-bs-target="#healthConditionsCarousel" data-bs-slide-to="3"></li>
+  </ol>
 
-  <br><br>
+  <!-- Slides -->
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="https://thumbor.forbes.com/thumbor/fit-in/x/https://www.forbes.com/health/wp-content/uploads/2021/08/how_to_reduce_blood_pressure_getty_creative.jpeg" alt="Condition 1" class="carousel-image">
+      <div class="carousel-caption bg-success text-white">
+        <div>
+          <h3>Hypertension</h3>
+          <p>Hypertension, commonly known as high blood pressure, is a chronic medical condition characterized by persistently elevated blood pressure levels in the arteries. Managing hypertension often involves lifestyle modifications and, in some cases, medication. Lifestyle changes may include adopting a healthy diet (low in sodium and high in fruits, vegetables, and whole grains), regular exercise, weight management, limiting alcohol consumption, quitting smoking, and managing stress levels. Medications prescribed by healthcare professionals aim to lower blood pressure and reduce the risk of complications.</p>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="https://thrive-magazine.co.uk/wp-content/uploads/2021/10/lowgi.jpg" alt="Condition 2" class="carousel-image">
+      <div class="carousel-caption bg-success text-white">
+        <div>
+          <h3>Diabetes</h3>
+          <p>Diabetes is a chronic metabolic disorder characterized by high blood sugar levels, resulting from inadequate insulin production or impaired insulin function. Insulin, produced by the pancreas, regulates the absorption and utilization of glucose in the body. In type 1 diabetes, the immune system mistakenly attacks and destroys the insulin-producing cells in the pancreas, while in type 2 diabetes, the body becomes resistant to insulin or doesn't produce enough of it. Diabetes can lead to various complications affecting the eyes, kidneys, nerves, and cardiovascular system. It requires lifelong management, including blood sugar monitoring, healthy eating, regular physical activity, and, in some cases, medication or insulin therapy under the guidance of healthcare professionals.</p>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="https://www.northshore.org/globalassets/healthy-you/best-and-worst-foods-for-heart-blog-small.jpg" alt="Condition 3" class="carousel-image">
+      <div class="carousel-caption bg-success text-white">
+        <div>
+          <h3>Heart Health</h3>
+          <p>Heart disease refers to a range of conditions that affect the heart's structure and function. It is often used interchangeably with the term cardiovascular disease, which encompasses various conditions affecting the blood vessels as well. Heart diseases can include coronary artery disease, heart failure, arrhythmias, and valvular heart disease. These conditions can result from factors like high blood pressure, high cholesterol, smoking, obesity, and a sedentary lifestyle. Prevention and management of heart disease involve lifestyle modifications, including a heart-healthy diet, regular exercise, avoidance of smoking, and appropriate medical interventions under the care of healthcare professionals.</p>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="https://blog-images-1.pharmeasy.in/2020/01/26171604/061.jpg" alt="Condition 4" class="carousel-image">
+      <div class="carousel-caption bg-success text-white">
+        <div>
+          <h3>Anemia</h3>
+          <p>Anemia is a medical condition characterized by a decrease in the number of red blood cells or a decrease in the amount of hemoglobin within the red blood cells. Hemoglobin is responsible for carrying oxygen to tissues throughout the body. Anemia can result from various factors, including nutritional deficiencies (such as iron, vitamin B12, or folate), chronic diseases, inherited disorders, or blood loss. Treatment for anemia depends on the underlying cause and may involve dietary changes, supplements, medications, or other interventions recommended by a healthcare professional.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <form action="/health" method="post">
-    <label for="health-condition">Select a health condition:</label>
-    <select id="health-condition" name="condition">
-      <option value="diabetes">Diabetes</option>
-      <option value="hypertension">Hypertension</option>
-      <option value="heart_health">Heart Health</option>
-      <option value="anemia">Anemia</option>
-
-      <!-- add more health condition options later on -->
-
-    </select>
-    <br><br>
-    <input type="submit" value="Search">
-  </form>
-
-  <br><br><br><br><br><br>
-  
-
-{% if session['username'] %}
-  <p>Welcome, {{ session['username'] }}! <a href="/logout">Log Out</a></p>
-{% else %}
-<div class="login-box">
-  <h2 class="login-title">Already have an account? Log in to access your personal dashboard!  </h2>
-  <a class="login-link" href="/login">Log In</a>
+  <!-- Controls -->
+  <a class="carousel-control-prev" href="#healthConditionsCarousel" role="button" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#healthConditionsCarousel" role="button" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </a>
 </div>
-<div class="register-box">
-  <h2 class="register-title">Do not have an account? Please register below!</h2>
-  <a class="register-link" href="/register">Register</a>
-{% endif %}
 
-<br><br><br>
+<script src="https://unpkg.com/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://unpkg.com/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
-<div class="dashboard-box"></div>
-<h2 class="dashboard-title">Click below to access your personal dashboard!</h2>
-<a class="dashboard-link" href="/dashboard">Dashboard</a>
+
+<form action="/health" method="post">
+  <label for="health-condition">Select a health condition:</label>
+  <select id="health-condition" name="condition">
+    <option value="diabetes">Diabetes</option>
+    <option value="hypertension">Hypertension</option>
+    <option value="heart_health">Heart Health</option>
+    <option value="anemia">Anemia</option>
+    <!-- add more health condition options later on -->
+  </select>
+  <br><br>
+  <input type="submit" value="Search">
+</form>
+
+<br><br><br><br><br><br>
 
 {% endblock %}
-
 
 
 

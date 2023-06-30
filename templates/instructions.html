@@ -1,51 +1,74 @@
 {% extends "base.html" %}
 {% block body %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
-  {% if is_user_logged_in %}
-    <div id="heartContainer">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-      <form id="favoriteForm">
-        <input type="hidden" id="recipe_id" value="{{ results.id }}">
-        <input type="hidden" id="recipe_title" value="{{ results.title }}">
-        <input type="hidden" id="recipe_image" value="{{ results.image }}">  
-        <button id="favoriteButton" type="submit">
-          <i class="fas fa-heart heart-icon" style="font-size: 50px;"></i>
-        </button>
-      </form>
-      <br>
-      Click to add to favorites
-    </div>
-  {% endif %}
+{% if is_user_logged_in %}
+<div id="heartContainer">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <form id="favoriteForm">
+    <input type="hidden" id="recipe_id" value="{{ results.id }}">
+    <input type="hidden" id="recipe_title" value="{{ results.title }}">
+    <input type="hidden" id="recipe_image" value="{{ results.image }}">  
+    <button id="favoriteButton" type="submit">
+      <i class="fas fa-heart heart-icon" style="font-size: 50px;"></i>
+    </button>
+  </form>
+  <br>
+  Click to add to favorites
+</div>
+{% endif %}
 
-  <title>Recipe Details</title>
+<title>Recipe Details</title>
 
+<div class="section">
   <h1>{{ results.title }}</h1>
-  <img src="{% if results.image %}{{ results.image }}{% endif %}" class="recipe-image">
+</div>
 
+<div class="section-image">
+  <img src="{% if results.image %}{{ results.image }}{% endif %}" class="recipe-image">
+</div>
+
+<div class="section-summary">
   <h2>Ingredients:</h2>
   <ul>
     {% for ingredient in results.extendedIngredients %}
-      <li><b>{{ ingredient.original }}</b></li>
+    <li>{{ ingredient.original }}</li>
     {% endfor %}
   </ul>
+</div>
 
+<div class="section">
   <h2>Prep Time:</h2>
   <p><b>{{ results.readyInMinutes }} minutes</b></p>
+</div>
 
+<div class="section-summary">
   <h3>Servings:</h3>
-  <p><b>{{ results.servings }}</b></p>
+  <p>{{ results.servings }}</p>
+</div>
 
+<div class="section">
   <h4>Instructions:</h4>
   <ol class="instructions-list">
     {% for instruction in results.analyzedInstructions[0].steps %}
-      <li><b>{{ instruction.step }}</b></li>
+    <li>{{ instruction.step }}</li>
     {% endfor %}
   </ol>
+</div>
 
+<div class="section-summary">
   <h4>Summary and Nutrition Details:</h4>
-  <ol class="recipe-summary">
   <p>{{ results.summary | safe }}</p>
-  </ol>
+</div>
 
-  <script src="{{ url_for('static', filename='js/favorites.js') }}"></script>
+<style>
+body {
+  background-color: #f8f9fa; /* Set the background color of the page */
+  color: white; /* Set the default text color to white */
+}
+</style>
+
+<script src="{{ url_for('static', filename='js/favorites.js') }}"></script>
 {% endblock %}

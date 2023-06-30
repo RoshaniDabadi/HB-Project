@@ -5,12 +5,25 @@
 {% endblock %}
 
 {% block body %}
-  <font size=16>Click for recipe instructions:</font>
-  <br><br><br>
-  {% for result in results['results'] %}
-    <a href="/instructions/{{ result['id'] }}">
-    <h1>{{ result['title'] }}</h1>
-    <img src="{{ result['image'] }}">
-    </a>
-  {% endfor %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="text-center mb-5">Click for instructions:</h2>
+      </div>
+    </div>
+    <div class="row row-cols-2 row-cols-md-3 g-4">
+      {% for result in results['results'] %}
+      <div class="col">
+        <div class="card">
+          <a href="/instructions/{{ result['id'] }}">
+            <img src="{{ result['image'] }}" class="card-img-top recipe-image" alt="{{ result['title'] }}">
+            <div class="card-body">
+              <h5 class="card-title">{{ result['title'] }}</h5>
+            </div>
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}

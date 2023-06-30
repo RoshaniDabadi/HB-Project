@@ -5,29 +5,26 @@
 {% endblock %}
 
 {% block body %}
-  <h1>Welcome to your Dashboard</h1>
+  <div class="dashboard-container">
+    <h1 class="mt-5">Hello, {{ session['username'] }}!</h1>
+    <p class="lead">Welcome to your Dashboard!</p>
 
-  <div class="user-info">
-    <h2>Hello, {{ session['username'] }}!</h2>
-    <p>Your favorite recipes are here for instant access!</p>
-  </div>
-
-  <br><br><br><br>
-
-  <div class="dashboard-components">
-    <h3>Favorite Recipes</h3>
-    <ul>
-      {% for recipe in favorite_recipes %}
-        <li>
-          Recipe ID: {{ recipe.recipe_id }}<br>
-          Title: {{ recipe.title }}<br>
-          <img src="{{ recipe.image }}" alt="{{ recipe.title }}" width="100"><br>
-        </li>
-      {% endfor %}
-    </ul>
-
-    <h3>Settings</h3>
-    <!-- Add settings options and forms for user preferences -->
+    <div class="mt-5">
+      <h3>Favorite Recipes</h3>
+      <div class="row">
+        {% for recipe in favorite_recipes %}
+        <div class="col-md-6">
+          <div class="card mb-3 border">
+            <img src="{{ recipe.image }}" alt="{{ recipe.title }}" class="card-img-top">
+            <div class="card-body">
+              <h5 class="card-title"><a href="/instructions/{{ recipe.recipe_id }}">{{ recipe.title }}</a></h5>
+              <p class="card-text"></p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
   </div>
 
   <script src="{{ url_for('static', filename='js/favorites.js') }}"></script>
