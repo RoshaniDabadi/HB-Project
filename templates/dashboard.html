@@ -15,9 +15,9 @@
         {% for recipe in favorite_recipes %}
         <div class="col-md-6">
           <div class="card mb-3 border">
-            <img src="{{ recipe.image }}" alt="{{ recipe.title }}" class="card-img-top">
+            <img src="{{ recipe.image }}" alt="{{ recipe.title }}" class="card-img-top image-with-border">
             <div class="card-body">
-              <h5 class="card-title"><a href="/instructions/{{ recipe.recipe_id }}">{{ recipe.title }}</a></h5>
+              <h5 class="card-title"><a href="/instructions/{{ recipe.recipe_id }}" class="recipe-link">{{ recipe.title }}</a></h5>
               <p class="card-text"></p>
             </div>
           </div>
@@ -28,4 +28,15 @@
   </div>
 
   <script src="{{ url_for('static', filename='js/favorites.js') }}"></script>
+
+  <style>
+    .image-with-border {
+      border: 5px solid green;
+    }
+
+    .recipe-link {
+      color: green;
+    }
+  </style>
 {% endblock %}
+

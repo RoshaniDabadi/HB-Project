@@ -136,9 +136,9 @@ def instructions(recipe_id):
         is_user_logged_in = 'user_id' in session
 
         return render_template("instructions.html", results=data, is_user_logged_in=is_user_logged_in)
+        
 
-
-@app.route('/dashboard', methods=['GET', 'POST'])
+@app.route('/dashboard', methods=['GET', 'POST', 'DELETE'])
 def dashboard():
     is_user_logged_in = 'user_id' in session
 
@@ -152,27 +152,29 @@ def dashboard():
             recipe_id = request.json.get('recipe_id')
             recipe_title = request.json.get('recipe_title')
             recipe_image = request.json.get('recipe_image')
-        
-            print("\n\n",recipe_id, recipe_title, recipe_image, "\n\n")
+
+            print("\n\n", recipe_id, recipe_title, recipe_image, "\n\n")
 
             recipe = crud.recipe_query(recipe_id)
 
             if recipe is None:
                 crud.populate_api_recipes(recipe_id, recipe_title, recipe_image)
 
-            
             favorite_recipe = crud.add_to_favorites(user_id, recipe_id)
 
-            return {"Success": True}
+            return redirect('/dashboard')
 
-    
-    
+        elif request.method == 'DELETE':
+            recipe_id = request.json.get('recipe_id')
+
+            # Remove the recipe from the user's favorites list
+            crud.remove_from_favorites(user_id, recipe_id)
+
+            return redirect('/dashboard')
+
         return render_template('dashboard.html', favorite_recipes=favorite_recipes, is_user_logged_in=is_user_logged_in)
-    
-    
-    return ("You must be logged in to access the dashboard!")
-    
 
+    return "You must be logged in to access the dashboard!"
 
 
 if __name__ == '__main__':

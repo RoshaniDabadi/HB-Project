@@ -20,27 +20,27 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" href="/">
-            <button class="btn btn-success nav-button">Home</button>
+            <button class="btn btn-success nav-button"><font size=5><b>Home</b></font></button>
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/dashboard">
-            <button class="btn btn-success nav-button">Dashboard</button>
+            <button class="btn btn-success nav-button"><font size=5><b>Dashboard</b></font></button>
           </a>
         </li>
       </ul>
       <div class="ml-auto">
         {% if session['username'] %}
           <p>Welcome, {{ session['username'] }}!
-          <br><a href="/logout">Log Out</a></p>
+          <br><a href="/logout"><font color=yellow>Log Out</font></a></p>
         {% else %}
           <div class="login-box small-box">
-            <h3 class="login-title"><font size="5">Log in to personalize your dashboard!</font></h3>
-            <a class="login-link" href="/login">Log In</a>
+            <h3 class="login-title"><font size="3">Log in to personalize your dashboard!</font></h3>
+            <a class="login-link" href="/login"><font color=yellow>Log In</font></a>
           </div>
           <div class="register-box small-box">
-            <h2 class="register-title"><font size=5>Please register below!</font></h2>
-            <a class="register-link" href="/register">Register</a>
+            <h2 class="register-title"><font size=3>Please register below!</font></h2>
+            <a class="register-link" href="/register"><font color=yellow>Register</font></a>
           </div>
         {% endif %}
       </div>
@@ -55,7 +55,7 @@
       </div>
     </div>
   </div>
-  <h2><font size="5">Your health, your recipes, your way!</font></h2>
+    <font size="5">Your health, your recipes, your way!</font>
 </div>
 
 <main class="container">

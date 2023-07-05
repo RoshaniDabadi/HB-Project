@@ -4,52 +4,50 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
-{% if is_user_logged_in %}
-<div id="heartContainer">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <form id="favoriteForm">
-    <input type="hidden" id="recipe_id" value="{{ results.id }}">
-    <input type="hidden" id="recipe_title" value="{{ results.title }}">
-    <input type="hidden" id="recipe_image" value="{{ results.image }}">  
-    <button id="favoriteButton" type="submit">
-      <i class="fas fa-heart heart-icon" style="font-size: 50px;"></i>
-    </button>
-  </form>
-  <br>
-  Click to add to favorites
-</div>
-{% endif %}
-
 <title>Recipe Details</title>
 
 <div class="section">
-  <h1>{{ results.title }}</h1>
+<font size=6>{{ results.title }}</font>
 </div>
 
-<div class="section-image">
-  <img src="{% if results.image %}{{ results.image }}{% endif %}" class="recipe-image">
+<div class="d-flex justify-content-center"> <!-- this div to center align the image -->
+  <div class="image-container">
+    <img src="{% if results.image %}{{ results.image }}{% endif %}" class="recipe-image">
+    {% if is_user_logged_in %}
+    <form id="favoriteForm">
+      <input type="hidden" id="recipe_id" value="{{ results.id }}">
+      <input type="hidden" id="recipe_title" value="{{ results.title }}">
+      <input type="hidden" id="recipe_image" value="{{ results.image }}">  
+      <button id="favoriteButton" class="btn" type="submit">
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="green" class="bi bi-heart-pulse-fill" viewBox="0 0 16 16">
+          <path d="M1.475 9C2.702 10.84 4.779 12.871 8 15c3.221-2.129 5.298-4.16 6.525-6H12a.5.5 0 0 1-.464-.314l-1.457-3.642-1.598 5.593a.5.5 0 0 1-.945.049L5.889 6.568l-1.473 2.21A.5.5 0 0 1 4 9H1.475Z"/>
+          <path d="M.88 8C-2.427 1.68 4.41-2 7.823 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C11.59-2 18.426 1.68 15.12 8h-2.783l-1.874-4.686a.5.5 0 0 0-.945.049L7.921 8.956 6.464 5.314a.5.5 0 0 0-.88-.091L3.732 8H.88Z"/>
+        </svg>
+      </button>
+    </form>
+    {% endif %}
+  </div>
 </div>
 
 <div class="section-summary">
-  <h2>Ingredients:</h2>
-  <ul>
-    {% for ingredient in results.extendedIngredients %}
-    <li>{{ ingredient.original }}</li>
-    {% endfor %}
-  </ul>
+  <div class="container">
+    <div class="ingredients-box">
+      <h3>Ingredients:</h3>
+      <ul style="list-style: none; padding-left: 0;">
+        {% for ingredient in results.extendedIngredients %}
+        <li>{{ ingredient.original }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="details-box">
+      <div class="details-cell">Prep Time: {{ results.preparationMinutes }} minutes</div>
+      <div class="details-cell">Servings: {{ results.servings }}</div>
+    </div>
+  </div>
 </div>
 
-<div class="section">
-  <h2>Prep Time:</h2>
-  <p><b>{{ results.readyInMinutes }} minutes</b></p>
-</div>
 
-<div class="section-summary">
-  <h3>Servings:</h3>
-  <p>{{ results.servings }}</p>
-</div>
-
-<div class="section">
+<div class="section" style="margin-top: 20px;">
   <h4>Instructions:</h4>
   <ol class="instructions-list">
     {% for instruction in results.analyzedInstructions[0].steps %}
@@ -58,9 +56,12 @@
   </ol>
 </div>
 
-<div class="section-summary">
+<div class="section-summary" style="margin-top: 20px;">
   <h4>Summary and Nutrition Details:</h4>
   <p>{{ results.summary | safe }}</p>
+  {% if results.sourceUrl %}
+    <p>Source: <a href="{{ results.sourceUrl }}">{{ results.sourceUrl }}</a></p>
+  {% endif %}
 </div>
 
 <style>
@@ -68,6 +69,47 @@ body {
   background-color: #f8f9fa; /* Set the background color of the page */
   color: white; /* Set the default text color to white */
 }
+
+.favorite svg path {
+  fill: #ff0000; /* Set fill color to red for the heart icon when it is favorited */
+}
+
+body {
+  background-color: #f8f9fa;
+  color: white;
+}
+
+.recipe-info {
+  font-size: 18px; /* Set the desired font size */
+  font-weight: bold; /* Set the desired font weight */
+}
+
+.instructions-list {
+  font-size: 18px; /* Set the desired font size */
+  line-height: 1.5; /* Set the desired line height */
+}
+
+.section .row {
+  display: flex;
+}
+
+.section .col-sm-6 {
+  flex-basis: 50%;
+}
+
+th {
+  padding-bottom: 10px;
+}
+
+th:nth-child(2),
+th:nth-child(3) {
+  padding-left: 20px;
+}
+
+.details-cell {
+    padding-top: 10px;
+  }
+
 </style>
 
 <script src="{{ url_for('static', filename='js/favorites.js') }}"></script>

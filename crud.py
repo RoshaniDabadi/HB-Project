@@ -76,6 +76,16 @@ def add_to_favorites(user_id, recipe_id):
     db.session.add(add_favorite)
     db.session.commit()
 
+def remove_from_favorites(user_id, recipe_id):
+    favorite = Favorite.query.filter_by(user_id=user_id, recipe_id=recipe_id).first()
+
+    if favorite:
+        db.session.delete(favorite)
+        db.session.commit()
+        return True
+    
+    return False
+
 
         
 if __name__ == "__main__":
