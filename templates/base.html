@@ -35,12 +35,7 @@
           <br><a href="/logout"><font color=yellow>Log Out</font></a></p>
         {% else %}
           <div class="login-box small-box">
-            <h3 class="login-title"><font size="3">Log in to personalize your dashboard!</font></h3>
-            <a class="login-link" href="/login"><font color=yellow>Log In</font></a>
-          </div>
-          <div class="register-box small-box">
-            <h2 class="register-title"><font size=3>Please register below!</font></h2>
-            <a class="register-link" href="/register"><font color=yellow>Register</font></a>
+          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#loginModal"><b>Log In</b></button>
           </div>
         {% endif %}
       </div>
@@ -63,6 +58,74 @@
   {% endblock %}
 </main>
 
+<!-- Code for bootstrap modal - log in -->
+
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">Log In</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Add your login form here -->
+        <form method="POST" action="/login">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+          </div>
+          <button type="submit" class="btn btn-success">Log In</button>
+        </form>
+
+        <div class="register-box small-box">
+          <h2 class="register-title"><font size=3><font color=green>Don't have an account? Please register below!</font></font></h2>
+          <a class="register-link" href="#" data-toggle="modal" data-target="#registerModal">
+            <font color=green><u>Register</u></font>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Code for bootstrap modal - register -->
+
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="registerModalLabel">Register</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Add your register form here -->
+        <form method="POST" action="/register">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Enter a username" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Enter a password" required>
+          </div>
+          <!-- Add more fields for registration as needed -->
+          <button type="submit" class="btn btn-success">Register</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </body>
 </html>
-
