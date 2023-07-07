@@ -1,0 +1,148 @@
+body {
+    text-align: center;
+    margin-top: 0;
+    font-style: bold;
+    color: white; 
+  }
+
+  
+  label {
+    font-family: Arial;
+    font-size: 25px;
+    color: green;
+  }
+  
+  select {
+    font-family: Arial;
+    font-size: 25px;
+    color: green;
+  }
+  
+  input[type="submit"] {
+    font-family: Arial;
+    font-size: 15px;
+    color: black;
+    background-color: limegreen;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+
+  .instructions-list {
+    margin-left: 100px; /* Adjust the margin value as needed */
+    margin-right: 100px; /* Adjust the margin value as needed */
+  }
+
+  .recipe-image {
+    border: 7px solid green;
+  }
+
+  .recipe-summary {
+    margin-left: 150px; /* Adjust the margin value as needed */
+    margin-right: 150px; /* Adjust the margin value as needed */
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: olivedrab
+  }
+  
+  .titleheader {
+    background-image: url("https://as1.ftcdn.net/v2/jpg/03/94/37/60/1000_F_394376014_fk66YbBwjdIvRkirq1i6XDkQptspcIb7.jpg"); 
+    background-size: 100% 400%;
+  }
+  
+  .user-info {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    color: white;
+  }
+
+  .carousel-inner .carousel-item img {
+      width: 125%; /* Adjust this value as needed */
+      height: 500px; /* Adjust this value as needed */
+  }
+
+  .carousel-caption {
+    position: absolute;
+    top: 0;
+    right: 0px;
+    left: 0px;
+    bottom: 0;
+    width: 50%;
+    background-color: rgba(0, 128, 0, 0.8);
+    color: white;
+    padding: 50px;
+    font-size: 14px; /* Adjust the font size as needed */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .card-title {
+    color: green;
+  }
+
+  .green-box {
+    background-color: green;
+    color: green;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .section {
+    background-color: green; /* Set the background color of the section */
+    padding: 10px; /* Add padding to create space around the section */
+    margin-bottom: 10px; /* Add margin at the bottom of the section */
+  }
+
+  .section-image {
+    padding: 10px; /* Add padding to create space around the section */
+    margin-bottom: 10px; /* Add margin at the bottom of the section */
+  }
+
+  .image-container {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .section-summary {
+    border: solid 5px green;
+    padding: 10px; /* Add padding to create space around the section */
+    margin-bottom: 50px; /* Add margin at the bottom of the section */
+    color: green;
+  }
+
+  .white-font {
+    color: white;
+  }
+  
+  .bold {
+    font-weight: bold;
+  }
+  
+  .small-box {
+    font-size: 14px;
+    padding: 5px;
+  }
+
+  .login-content-box {
+    border: 2px solid #009000; /* Add border */
+    padding: 20px; /* Add padding to create space around the content */
+    margin-bottom: 100px; /* Add margin at the bottom of the box */
+  }
+
+  .box-container {
+    border: 2px solid #009000;
+    padding: 20px;
+    margin-bottom: 100px;
+  }
+
+  .dashboard-container {
+    border: 2px solid #009000;
+    padding: 20px;
+    color: #009000;
+  }
+
