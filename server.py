@@ -182,4 +182,4 @@ if __name__ == '__main__':
 
     connect_to_db(app)
 
-    app.run(debug=True)
+    app.run()
